@@ -19,7 +19,6 @@ const { request, application } = require('express');
 app.post('/join', (req, res) => {
     const { user_id, nickname, password } = req.body;
 
-    //validation(검사) 이 맨 위에 있어야 함
     connection.query(
         `
         SELECT 
@@ -72,7 +71,6 @@ app.post('/join', (req, res) => {
                 }
             );
 
-            //nickname까지 검사한 후 맨 마지막에 넣는 query
             connection.query(
                 `
                 INSERT INTO 
@@ -99,7 +97,6 @@ app.post('/join', (req, res) => {
                                 console.log(error);
                                 return;
                             }
-                            // console.log(result);
                             res.status(200).json(result);
                         }
                     );
@@ -314,7 +311,6 @@ app.post('/rank', (req, res) => {
     let highestScoreNicknameList = [];
     let secondHighestScoreNicknameList = [];
     let thirdHighestScoreNicknameList = [];
-    // 1등 리스트, 스코어 추출
     connection.query(
         `
         SELECT 
@@ -392,14 +388,6 @@ app.post('/rank', (req, res) => {
                                 }
                             } else {
                             }
-                            // // 스코어 랭킹에 겹치는 이름이 없도록 filtering
-                            // secondHighestScoreNicknameList = secondHighestScoreNicknameList.filter(
-                            //     (n) => !highestScoreNicknameList.includes(n)
-                            // );
-                            // thirdHighestScoreNicknameList = thirdHighestScoreNicknameList.filter(
-                            //     (n) =>
-                            //         !highestScoreNicknameList.includes(n) && !secondHighestScoreNicknameList.includes(n)
-                            // );
                             res.status(200).json({
                                 highestScore: highestScore,
                                 secondHighestScore: secondHighestScore,
